@@ -36,3 +36,15 @@ export const createCity = async (name) =>
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name }),
   });
+
+export const updateCity = async (id, name) =>
+  fetchJson(`${API_BASE_URL}/cities/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name }),
+  });
+
+export const deleteCity = async (id) =>
+  fetchJson(`${API_BASE_URL}/cities/${id}`, {
+    method: "DELETE",
+  });

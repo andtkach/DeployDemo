@@ -1,7 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 
 import packageJson from "../package.json";
-import { createCity, fetchApiInfo, fetchCities } from "./api/cities";
+import {
+  createCity,
+  deleteCity,
+  fetchApiInfo,
+  fetchCities,
+  updateCity,
+} from "./api/cities";
 import ApiInfo from "./components/ApiInfo";
 import CityForm from "./components/CityForm";
 import CityList from "./components/CityList";
@@ -43,6 +49,36 @@ const App = () => {
     }
   };
 
+  const handleUpdateCity = async (id, name) => {
+    const trimmed = name.trim();
+    if (!trimmed) {
+      setError("City name cannot be empty.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await updateCity(id, trimmed);
+      await loadData();
+    } catch (err) {
+      setError("Unable to update city. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteCity = async (id) => {
+    setIsSubmitting(true);
+    try {
+      await deleteCity(id);
+      await loadData();
+    } catch (err) {
+      setError("Unable to delete city. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="page">
       <header className="header">
@@ -66,7 +102,12 @@ const App = () => {
         <>
           {/* {apiInfo && <ApiInfo info={apiInfo} />} */}
           <CityForm onAddCity={handleAddCity} isSubmitting={isSubmitting} />
-          <CityList cities={cities} />
+          <CityList
+            cities={cities}
+            onDeleteCity={handleDeleteCity}
+            onUpdateCity={handleUpdateCity}
+            isWorking={isSubmitting}
+          />
         </>
       )}
     </div>
