@@ -11,6 +11,7 @@ const App = () => {
   const [cities, setCities] = useState([]);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const clientHost = typeof window !== "undefined" ? window.location.hostname : "unknown";
 
   const loadData = useCallback(async () => {
     try {
@@ -46,7 +47,14 @@ const App = () => {
     <div className="page">
       <header className="header">
         <h1>DeployDemo Cities</h1>
-        <p className="subtitle">UI version {packageJson.version}</p>
+        <div className="header-meta">
+          <span>UI {packageJson.version}</span>
+          {/* <span>Client {clientHost}</span> */}
+          {apiInfo && <span>API {apiInfo.servername} {apiInfo.version}</span>}
+          {/* {apiInfo && (
+            <span>API time {new Date(apiInfo.datetime).toLocaleString()}</span>
+          )} */}
+        </div>
       </header>
 
       {error ? (
@@ -56,7 +64,7 @@ const App = () => {
         </div>
       ) : (
         <>
-          {apiInfo && <ApiInfo info={apiInfo} />}
+          {/* {apiInfo && <ApiInfo info={apiInfo} />} */}
           <CityForm onAddCity={handleAddCity} isSubmitting={isSubmitting} />
           <CityList cities={cities} />
         </>

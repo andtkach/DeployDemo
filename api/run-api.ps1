@@ -1,6 +1,7 @@
 $ErrorActionPreference = "Stop"
 
 podman run --rm `
+  -it `
   --name depdemo-api `
   -e MONGO_HOST=host.containers.internal `
   -e MONGO_PORT=27027 `

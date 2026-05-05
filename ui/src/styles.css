@@ -2,7 +2,9 @@
   color-scheme: light;
   font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   color: #0b1b2b;
-  background-color: #1d5fa6;
+    /* Change this to update the page background color. */
+    /* green #1f8f4b; blue #1d5fa6; */
+    background-color: #1d5fa6;
 }
 
 * {
@@ -11,6 +13,8 @@
 
 body {
   margin: 0;
+  /* Change this to update the page background color. */
+  /* green #1f8f4b; blue #1d5fa6; */
   background-color: #1d5fa6;
 }
 
@@ -29,6 +33,16 @@ body {
 .subtitle {
   margin: 4px 0 0;
   opacity: 0.9;
+}
+
+.header-meta {
+  display: inline-flex;
+  gap: 12px;
+  margin-top: 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
 }
 
 .card {
