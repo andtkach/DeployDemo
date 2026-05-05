@@ -4,9 +4,6 @@ ui, test, infra
 
 
 
-UI
-
-Nginx container with html page. Index html executes js on page load and asks api for data with GET request. Then shows response in the html page. Also on html page typed version of UI application and page has a blue background. If api server is not available we will show friendly error on index page.
 
 
 
