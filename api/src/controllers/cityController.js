@@ -39,7 +39,58 @@ const createCity = async (req, res, next) => {
   }
 };
 
+const updateCity = async (req, res, next) => {
+  try {
+    const id = Number.parseInt(req.params.id, 10);
+    const { name } = req.body ?? {};
+
+    if (!Number.isFinite(id)) {
+      return res.status(400).json({ error: "id must be a number" });
+    }
+
+    if (!name || typeof name !== "string") {
+      return res.status(400).json({ error: "name is required" });
+    }
+
+    const updatedCity = await City.findOneAndUpdate(
+      { id },
+      { name: name.trim(), updated_at: new Date() },
+      { new: true }
+    );
+
+    if (!updatedCity) {
+      return res.status(404).json({ error: "city not found" });
+    }
+
+    res.json(updatedCity);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteCity = async (req, res, next) => {
+  try {
+    const id = Number.parseInt(req.params.id, 10);
+
+    if (!Number.isFinite(id)) {
+      return res.status(400).json({ error: "id must be a number" });
+    }
+
+    const deletedCity = await City.findOneAndDelete({ id });
+
+    if (!deletedCity) {
+      return res.status(404).json({ error: "city not found" });
+    }
+
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getCities,
   createCity,
+  updateCity,
+  deleteCity,
 };
