@@ -36,7 +36,8 @@ body {
 }
 
 .header-meta {
-  display: inline-flex;
+  display: flex;
+  align-items: center;
   gap: 12px;
   margin-top: 6px;
   font-size: 12px;
@@ -45,12 +46,41 @@ body {
   opacity: 0.85;
 }
 
+.header-info {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.header-meta .toolbar-action {
+  margin-left: auto;
+}
+
 .card {
   background: #ffffff;
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 16px;
   box-shadow: 0 12px 30px rgba(6, 20, 41, 0.2);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.toolbar-title {
+  font-weight: 600;
+}
+
+.toolbar-action {
+  margin-left: auto;
+  background: #0f7f39;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 16px;
 }
 
 .error {
@@ -121,18 +151,24 @@ button:disabled {
 }
 
 .city-row {
-  gap: 10px;
+  gap: 8px;
 }
 
 .city-main {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
 }
 
 .city-actions {
   display: flex;
   gap: 8px;
+  margin-left: auto;
+}
+
+.city-main input[type="text"] {
+  max-width: 280px;
 }
 
 .city-actions .danger {

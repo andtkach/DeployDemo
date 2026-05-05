@@ -18,6 +18,10 @@ const App = () => {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const clientHost = typeof window !== "undefined" ? window.location.hostname : "unknown";
+  const uiContainerId =
+    typeof window !== "undefined" && window.__UI_CONTAINER_ID
+      ? window.__UI_CONTAINER_ID
+      : "unknown";
 
   const loadData = useCallback(async () => {
     try {
@@ -84,15 +88,25 @@ const App = () => {
       <header className="header">
         <h1>DeployDemo Cities</h1>
         <div className="header-meta">
-          <span>UI {packageJson.version}</span>
-          {/* <span>Client {clientHost}</span> */}
-          {apiInfo && <span>API {apiInfo.servername} {apiInfo.version}</span>}
-          {/* {apiInfo && (
-            <span>API time {new Date(apiInfo.datetime).toLocaleString()}</span>
-          )} */}
+          <div className="header-info">
+            <span>UI {uiContainerId} ({packageJson.version})</span>
+            {apiInfo && <span> · </span>}
+            {apiInfo && <span>API {apiInfo.servername} ({apiInfo.version})</span>}            
+          </div>
+          <button
+            type="button"
+            className="toolbar-action"
+            onClick={loadData}
+            disabled={isSubmitting}
+            aria-label="Refresh cities"
+            title="Refresh"
+          >
+            ↻
+          </button>
         </div>
       </header>
 
+      
       {error ? (
         <div className="card error">
           <h2>Service unavailable</h2>

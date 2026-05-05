@@ -22,6 +22,11 @@ const fetchJson = async (url, options) => {
     const message = await response.text();
     throw new Error(message || `Request failed with ${response.status}`);
   }
+
+  if (response.status === 204) {
+    return null;
+  }
+
   return response.json();
 };
 
