@@ -1,0 +1,59 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: depdemo-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27027:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: depdemo-api:latest
+    container_name: depdemo-api
+    environment:
+      MONGO_HOST: mongodb
+      MONGO_PORT: "27017"
+      MONGO_DB: depdemo-db
+      MONGO_USER: admin
+      MONGO_PASSWORD: password
+      PORT: "3031"
+    ports:
+      - "3031:3031"
+    depends_on:
+      - mongodb
+
+  ui:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    image: depdemo-ui:latest
+    container_name: depdemo-ui
+    ports:
+      - "3032:80"
+    depends_on:
+      - api
+
+  proc:
+    build:
+      context: ./proc
+      dockerfile: Dockerfile
+    image: depdemo-proc:latest
+    container_name: depdemo-proc
+    environment:
+      MONGO_HOST: mongodb
+      MONGO_PORT: "27017"
+      MONGO_DB: depdemo-db
+      MONGO_USER: admin
+      MONGO_PASSWORD: password
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo-data:
