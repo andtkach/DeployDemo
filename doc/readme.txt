@@ -1,18 +1,6 @@
 Demo apps:
 
-ui, test, infra
-
-
-
-
-
-
-Test
-
-Test file 1. Nodejs script which runs every second and gets html from UI app. It parses response from html get request and prints on console version of ui application and its background color. 
-
-Test file 2. Nodejs script which runs every second and gets json from API and prints server name and version.
-
+ infra
 
 
 Deployments: blue green, canary, rolling updates

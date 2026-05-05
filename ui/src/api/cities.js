@@ -16,6 +16,10 @@ const resolveApiBaseUrl = () => {
 
 const API_BASE_URL = resolveApiBaseUrl();
 
+if (typeof window !== "undefined") {
+  window.__UI_VERSION = "v1";
+}
+
 const fetchJson = async (url, options) => {
   const response = await fetch(url, options);
   if (!response.ok) {
