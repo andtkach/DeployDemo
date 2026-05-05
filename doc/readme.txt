@@ -1,6 +1,6 @@
 Demo apps:
 
-ui, api, proc, test, infra
+ui, test, infra
 
 
 
@@ -8,13 +8,6 @@ UI
 
 Nginx container with html page. Index html executes js on page load and asks api for data with GET request. Then shows response in the html page. Also on html page typed version of UI application and page has a blue background. If api server is not available we will show friendly error on index page.
 
-API
-Web api to store list of cities. Uses mongo db as storage.
-Has node.js server handles get request and returns json response with following payload: servername, app version, datetime of response.
-API also has city controller with get and post methods. Get - returns top 10 latest cities and post creates new city
-City model stored in database is city name, created atm city id
-Use node js mongoose to work with mongo database
-Create two powershell scripts to build and run images using podman. 
 
 
 Test
