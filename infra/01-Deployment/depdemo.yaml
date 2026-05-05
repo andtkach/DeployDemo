@@ -143,6 +143,7 @@ spec:
     - name: http
       port: 3031
       targetPort: 3031
+      nodePort: 30031
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -165,9 +166,6 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
-          env:
-            - name: API_BASE_URL
-              value: http://localhost:3031
           resources:
             requests:
               cpu: "50m"
@@ -189,3 +187,4 @@ spec:
     - name: http
       port: 80
       targetPort: 80
+      nodePort: 30080

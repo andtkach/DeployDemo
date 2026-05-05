@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: depdemo-api-canary
+  namespace: depdemo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: depdemo-api
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: depdemo-api   # must match the Service selector — canary pods receive traffic alongside stable
+        track: canary
+    spec:
+      containers:
+        - name: api
+          image: localhost/depdemo-api:v3
+          ports:
+            - containerPort: 3031
+          env:
+            - name: MONGO_HOST
+              value: mongodb
+            - name: MONGO_PORT
+              value: "27017"
+            - name: MONGO_DB
+              value: depdemo-db
+            - name: MONGO_USER
+              value: admin
+            - name: MONGO_PASSWORD
+              value: password
+            - name: PORT
+              value: "3031"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "250m"
+              memory: "512Mi"

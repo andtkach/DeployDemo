@@ -1,21 +1,4 @@
-Demo apps:
-
- infra
-
-
-Deployments: blue green, canary, rolling updates
-
-UI app demos blue green deployment
-
-API app demos canary deployment
-
-
-
-
-
-Kube namespace: depdemo
-
-
+1. Intro.
 
 I often conduct technical interviews and am surprised to find that the topic of deployment often causes difficulty for candidates.
 
@@ -29,31 +12,15 @@ For example, let's take a distributed application consisting of a UI, API, and p
 
 Let's run everything locally.
 
-Build Docker images with version 1 of all services.
 
-Deploy everything to Kubernetes.
+2. Local env setup.
+Build and run containers locally.
 
-Start changing applications and building new versions.
-
-To demonstrate blue-green deployment, we'll create a new version of the UI app with a green background and version 2.
-
-We'll build a new container with version 2 and deploy it alongside the old version.
-
-The old version is available on port 3011, and the new version on port 3012.
-
-The public version is on port 80.
-
-Next, to demonstrate canary deployment, we'll change the API version 2 and direct 20 percent of traffic to the new version.
-
-Then we'll completely switch to the new version 2 and remove the old API deployment.
+3. Create kubernetes cluster
 
 
+4. Deploy apps to kubernetes.
 
-To demonstrate rolling updates and zero downtime, we'll create version 3 of the UI API and proc and deploy everything simultaneously, running both tests. We'll also look at the log, which will show the new app versions.
+5. Demo rolling update
 
-
-
-Deployment schema
-
-5 UI, 5 API, 5 Proc
-
+6. Demo canary deploument
