@@ -13,13 +13,6 @@ API
 Has node.js server handles get request and returns json response with following payload: servername, app version, datetime of response.
 
 
-
-Proc
-
-Nodejs app which will be executed by cronjob from kubernetes. App starts, waits for random milliseconds from 0 to 1000, prints date and time, servername, app version and waits from more random 0-1000 milliseconds and stops.  
-
-
-
 Test
 
 Test file 1. Nodejs script which runs every second and gets html from UI app. It parses response from html get request and prints on console version of ui application and its background color. 

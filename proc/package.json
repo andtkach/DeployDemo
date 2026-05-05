@@ -1,0 +1,10 @@
+{
+  "name": "depdemo-proc",
+  "version": "v1",
+  "private": true,
+  "description": "Cron-style proc app for DeployDemo.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  }
+}
