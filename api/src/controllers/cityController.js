@@ -1,10 +1,14 @@
 const City = require("../models/city");
 
-const getLatestCities = async (req, res, next) => {
+const getCities = async (req, res, next) => {
   try {
+    const rawLimit = Array.isArray(req.query.num) ? req.query.num[0] : req.query.num;
+    const parsedLimit = rawLimit ? Number.parseInt(rawLimit, 10) : 10;
+    const limit = Number.isFinite(parsedLimit) && parsedLimit > 0 ? parsedLimit : 10;
+
     const cities = await City.find()
       .sort({ created_at: -1 })
-      .limit(10)
+      .limit(limit)
       .lean();
 
     res.json(cities);
@@ -36,6 +40,6 @@ const createCity = async (req, res, next) => {
 };
 
 module.exports = {
-  getLatestCities,
+  getCities,
   createCity,
 };
