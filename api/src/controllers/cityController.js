@@ -39,6 +39,26 @@ const createCity = async (req, res, next) => {
   }
 };
 
+const getCityById = async (req, res, next) => {
+  try {
+    const id = Number.parseInt(req.params.id, 10);
+
+    if (!Number.isFinite(id)) {
+      return res.status(400).json({ error: "id must be a number" });
+    }
+
+    const city = await City.findOne({ id }).lean();
+
+    if (!city) {
+      return res.status(404).json({ error: "city not found" });
+    }
+
+    res.json(city);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const updateCity = async (req, res, next) => {
   try {
     const id = Number.parseInt(req.params.id, 10);
@@ -90,6 +110,7 @@ const deleteCity = async (req, res, next) => {
 
 module.exports = {
   getCities,
+  getCityById,
   createCity,
   updateCity,
   deleteCity,

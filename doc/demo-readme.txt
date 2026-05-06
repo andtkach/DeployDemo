@@ -28,13 +28,14 @@ We’ll have three parts:
 
 UI,
 API,
-and Proc.
+and Proc,
+plus Database.
 
-Demo image 01-app-architecture. CREATE APP ARCHITECTURE
+Demo image: doc\img\01-app-architecture.png
 
 And we’ll start with the easiest setup possible: let's run the whole thing locally.
 
-Demo image 02-local-run. CREATE LOCAL RUN
+Demo image: doc\img\02-local-run.png
 
 
 2. Local env setup.
@@ -70,7 +71,7 @@ Delete all containers and volumes before moving on.
 First of all we need to create a Kubernetes cluster. I will use Kind for this.
 
 My Kubernetes cluster will host all services: api, ui, proc and database.
-Demo image 03-kubernetes-cluster. CREATE KUBERNETES CLUSTER
+Demo image: doc\img\03-kubernetes-cluster.png
 
 We will deploy one database with persistent storage.
 One Proc container as CronJob.
@@ -81,19 +82,19 @@ One Proc container as CronJob.
 ./infra/readme.txt
 
 5. Demo rolling update
-Demo image 04-rolling-update. CREATE ROLLING UPDATE
+Demo image: doc\img\04-rolling-update.png
 ./infra/02-RollingUpdate/readme.txt
 
 We can see how deploying new versions of our apps is done automatically and on one mentioned releasing new versions of our apps.
 
 6. Demo canary deployment
-Demo image 05-canary. CREATE CANARY
+Demo image: doc\img\05-canary.png
 ./infra/03-Canary/readme.txt
 
 We have both old and new version working together. The new version is deployed with a canary strategy, so it is not yet visible to all users.
 
 7. Demo blue green deployment
-Demo image 06-blue-green. CREATE BLUE GREEN
+Demo image: 06-blue-green. CREATE BLUE GREEN
 ./infra/04-BlueGreen/readme.txt
 
 We have both old and new version working together. The new version is deployed with a blue-green strategy, so it is not yet visible to all users.

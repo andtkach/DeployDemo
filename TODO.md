@@ -1,5 +1,5 @@
-To do:
-0. Create images for demos
+# To do:
+
 1. Create a demo in English
 2. Write complete demo script in english. Translate to Ukranian and Spanish.
 3. Update youtube links in README.md
