@@ -22,12 +22,12 @@ kubectl wait --namespace metallb-system --for=condition=available deployment --a
 kubectl apply -f infra/01-Deployment/metallb-config.yaml
 
 # 3. Load images into kind (check cluster name with: kind get clusters)
-podman save -o depdemo-api.tar  localhost/depdemo-api:latest
-podman save -o depdemo-ui.tar   localhost/depdemo-ui:latest
-podman save -o depdemo-proc.tar localhost/depdemo-proc:latest
-kind load image-archive depdemo-api.tar  --name kind-cluster
-kind load image-archive depdemo-ui.tar   --name kind-cluster
-kind load image-archive depdemo-proc.tar --name kind-cluster
+podman save -o depdemo-api-v1.tar  localhost/depdemo-api:latest
+podman save -o depdemo-ui-v1.tar   localhost/depdemo-ui:latest
+podman save -o depdemo-proc-v1.tar localhost/depdemo-proc:latest
+kind load image-archive depdemo-api-v1.tar  --name kind-cluster
+kind load image-archive depdemo-ui-v1.tar   --name kind-cluster
+kind load image-archive depdemo-proc-v1.tar --name kind-cluster
 
 # 4. Deploy
 kubectl apply -f infra/01-Deployment/depdemo.yaml

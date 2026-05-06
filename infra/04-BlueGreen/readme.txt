@@ -52,7 +52,7 @@ STEP 3 — Build the green image
 
 STEP 4 — Load the green image into kind
 -----------------------------------------
-  podman save -o depdemo-ui-green.tar localhost/depdemo-ui:v2
+  podman save -o depdemo-ui-v2.tar localhost/depdemo-ui:v2
   kind load image-archive depdemo-ui-v2.tar --name kind-cluster
 
 
@@ -69,7 +69,7 @@ Verify both blue and green pods are running side by side:
 STEP 6 — Preview green at a separate URL
 ------------------------------------------
 In a separate terminal, port-forward to the green service:
-  kubectl port-forward svc/ui-green 3033:80 -n depdemo
+  kubectl port-forward svc/ui-v2 3033:80 -n depdemo
 
 Open http://localhost:3033 — green background, v2.
 Open http://localhost:3032 — blue background, v1 still live.

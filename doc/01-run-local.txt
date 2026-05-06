@@ -1,0 +1,40 @@
+In order to run the application locally, you need to have Docker installed. I will use Podman, PowerShell.
+
+# Run database container
+```
+.\db\run.ps1
+```
+
+# Run API
+```
+.\api\build-api.ps1
+.\api\run-api.ps1
+.\api\test-api.ps1
+.\api\get-cities.ps1
+.\api\post-city.ps1
+```
+
+# Run Proc
+```
+.\proc\build-proc.ps1
+.\proc\run-proc.ps1
+```
+
+# Run UI
+```
+.\ui\build-ui.ps1
+.\ui\run-ui.ps1
+```
+
+# Test
+
+Open API in your browser:  http://localhost:3031
+Open UI in your browser:  http://localhost:3032
+
+Clean up
+```
+podman ps
+podman stop --all
+podman rm --all
+podman volume prune
+```

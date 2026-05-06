@@ -6,6 +6,6 @@ $dockerfilePath = Join-Path $uiRoot "Dockerfile"
 
 podman build `
   --file $dockerfilePath `
-  --tag depdemo-ui:v1 `
+  --tag depdemo-ui:v2 `
   --tag depdemo-ui:latest `
   $uiRoot

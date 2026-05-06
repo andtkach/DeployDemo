@@ -1,0 +1,99 @@
+1. Intro.
+
+One thing I keep noticing in technical interviews is that deployment becomes a weird blind spot for a lot of developers.
+
+You can talk architecture, APIs, clean code, scaling — no problem.
+But once the conversation gets to *“How do you actually deploy this thing?”* it often gets uncomfortable.
+
+And the answer is usually something like:
+*“Well… we have a DevOps person for that.”*
+
+Which is fair — a lot of teams work like that.
+But I still think every developer should know the basics of how their app gets deployed, how it runs, and what happens after it leaves their laptop.
+
+Nothing too fancy.
+Just the practical stuff you really should be comfortable with as a programmer.
+
+On our project, developers handle all of that ourselves — not just writing code, but also dealing with infrastructure, deployments, config, and making sure things actually run.
+
+And honestly, that’s the part I want to talk about.
+
+In this video, I’ll go through the minimum set of deployment knowledge I think every developer should have.
+
+Nothing theoretical, nothing overengineered — just the practical basics that help you ship software without treating production like magic.
+
+To make it real, let’s use a simple distributed app as an example.
+
+We’ll have three parts:
+
+UI,
+API,
+and Proc.
+
+Demo image 01-app-architecture. CREATE APP ARCHITECTURE
+
+And we’ll start with the easiest setup possible: let's run the whole thing locally.
+
+Demo image 02-local-run. CREATE LOCAL RUN
+
+
+2. Local env setup.
+Prerequisites:
+- Docker, I will use Podman.
+- Kubernetes, I will use Kind
+- PowerShell
+
+Build and run containers locally.
+
+./doc/01-run-local.txt
+
+All installed localy on my laptop.
+
+
+3. Run all with Docker Compose.
+It is possible to run all services with Docker Compose. It will build all images and run containers.
+```
+.\run-compose.ps1
+```
+Test
+Open API in your browser:  http://localhost:3031
+Open UI in your browser:  http://localhost:3032
+Open Podman to check containers, create new city in IU, run Proc from Podman, check city in UI.
+
+Now we done with local setup during develoment and testing. We can run complete services setup on Portainer or any type of Docker Compose deployment infradtructure.
+I have a fieling that a lot of developers stop here and do not go further with their deployments. What we will try to do next is to simulate production deployment with Kubernetes. I will run everything locally on my laptop but you can apply the same principles to any Kubernetes cluster in any cloud or on-premise environment.
+
+Delete all containers and volumes before moving on.
+
+3. Create kubernetes cluster
+First of all we need to create a Kubernetes cluster. I will use Kind for this.
+
+My Kubernetes cluster will host all services: api, ui, proc and database.
+Demo image 03-kubernetes-cluster. CREATE KUBERNETES CLUSTER
+
+We will deploy one database with persistent storage.
+One Proc container as CronJob.
+3 instances of API.
+3 instances of UI.
+
+4. Deploy apps to kubernetes.
+./infra/readme.txt
+
+5. Demo rolling update
+Demo image 04-rolling-update. CREATE ROLLING UPDATE
+./infra/02-RollingUpdate/readme.txt
+
+We can see how deploying new versions of our apps is done automatically and on one mentioned releasing new versions of our apps.
+
+6. Demo canary deployment
+Demo image 05-canary. CREATE CANARY
+./infra/03-Canary/readme.txt
+
+We have both old and new version working together. The new version is deployed with a canary strategy, so it is not yet visible to all users.
+
+7. Demo blue green deployment
+Demo image 06-blue-green. CREATE BLUE GREEN
+./infra/04-BlueGreen/readme.txt
+
+We have both old and new version working together. The new version is deployed with a blue-green strategy, so it is not yet visible to all users.
+When we are ready with new version, we can switch traffic to it.

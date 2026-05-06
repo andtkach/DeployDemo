@@ -11,8 +11,8 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 1        # one extra pod allowed during rollout
-      maxUnavailable: 0  # never take a pod down before a new one is ready
+      maxSurge: 1 # one extra pod allowed during rollout
+      maxUnavailable: 0 # never take a pod down before a new one is ready
   template:
     metadata:
       labels:
@@ -21,6 +21,16 @@ spec:
       containers:
         - name: api
           image: localhost/depdemo-api:v2
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sleep", "5"]
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3031
+            initialDelaySeconds: 3
+            periodSeconds: 2
           env:
             - name: MONGO_HOST
               value: mongodb

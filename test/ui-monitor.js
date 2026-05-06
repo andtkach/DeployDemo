@@ -2,7 +2,7 @@ const UI_URL = process.env.UI_URL ?? "http://localhost:3032";
 const INTERVAL_MS = Number.parseInt(process.env.INTERVAL_MS ?? "1000", 10);
 
 const fetchText = async (url) => {
-  const response = await fetch(url);
+  const response = await fetch(url, { headers: { Connection: "close" } });
   if (!response.ok) {
     throw new Error(`Request failed with ${response.status}`);
   }

@@ -10,7 +10,8 @@ for ($i = 1; $i -le $Requests; $i++) {
   $version  = $json.version
   $server   = $json.servername
 
-  $counts[$version] = ($counts[$version] ?? 0) + 1
+  if (-not $counts.ContainsKey($version)) { $counts[$version] = 0 }
+  $counts[$version]++
 
   $line = "[{0,3}/{1}] version={2}  server={3}" -f $i, $Requests, $version, $server
 

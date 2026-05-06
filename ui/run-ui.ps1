@@ -21,7 +21,7 @@ if (-not [string]::IsNullOrWhiteSpace($podmanIp)) {
 }
 
 podman run --rm `
-  -it `
+  -d `
   --name depdemo-ui `
   -e API_BASE_URL=$ApiBaseUrl `
   -p 0.0.0.0:3032:80 `
