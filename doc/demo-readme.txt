@@ -1,5 +1,7 @@
 1. Intro.
 
+I’ve been running technical interviews at the company I work for for a little over a year now.
+
 One thing I keep noticing in technical interviews is that deployment becomes a weird blind spot for a lot of developers.
 
 You can talk architecture, APIs, clean code, scaling — no problem.
