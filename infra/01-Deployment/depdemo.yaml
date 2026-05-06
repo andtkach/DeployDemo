@@ -188,3 +188,41 @@ spec:
       port: 80
       targetPort: 80
       nodePort: 30080
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: depdemo-proc
+  namespace: depdemo
+spec:
+  schedule: "* * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: proc
+              image: localhost/depdemo-proc:latest
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: MONGO_HOST
+                  value: mongodb
+                - name: MONGO_PORT
+                  value: "27017"
+                - name: MONGO_DB
+                  value: depdemo-db
+                - name: MONGO_USER
+                  value: admin
+                - name: MONGO_PASSWORD
+                  value: password
+              resources:
+                requests:
+                  cpu: "50m"
+                  memory: "64Mi"
+                limits:
+                  cpu: "100m"
+                  memory: "128Mi"
