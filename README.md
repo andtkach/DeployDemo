@@ -43,3 +43,8 @@ API: http://localhost:3031 — UI: http://localhost:3032
 | Kubernetes | Kind (local cluster) |
 | PowerShell | Terminal |
 | Windows | OS where everything runs |
+
+
+## Demo walkthroughs
+Repo: [DeployDemo](https://github.com/andtkach/DeployDemo)
+Video: [YouTube](https://www.youtube.com/@andtkach)
