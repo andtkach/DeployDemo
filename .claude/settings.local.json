@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"D:\\\\work\\\\andtkach\\\\DeployDemo\" -Force)",
+      "Bash(Select-Object Name, FullName, PSIsContainer)",
+      "Bash(Format-Table -AutoSize)",
+      "PowerShell(Get-ChildItem -Path \"D:\\\\work\\\\andtkach\\\\DeployDemo\\\\ui\" -Depth 2 -Force | Where-Object { $_.FullName -notmatch \"node_modules\" } | Select-Object FullName, PSIsContainer)",
+      "PowerShell(Write-Host \"=== PROC STRUCTURE ===\" -ForegroundColor Cyan; Get-ChildItem -Path \"D:\\\\work\\\\andtkach\\\\DeployDemo\\\\proc\" -Recurse -Force | Where-Object { $_.FullName -notmatch \"node_modules\" } | Select-Object FullName, PSIsContainer | Sort-Object FullName)"
+    ]
+  }
+}

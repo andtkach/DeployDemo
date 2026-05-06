@@ -42,6 +42,7 @@ Prerequisites:
 - Docker, I will use Podman.
 - Kubernetes, I will use Kind
 - PowerShell
+- Windows OS
 
 Build and run containers locally.
 
