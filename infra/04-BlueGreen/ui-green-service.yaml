@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui-v2
+  namespace: depdemo
+spec:
+  type: ClusterIP
+  selector:
+    app: depdemo-ui
+    slot: green
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
