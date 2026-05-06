@@ -40,4 +40,6 @@ API: http://localhost:3031 — UI: http://localhost:3032
 | Processor | Node.js 24 (batch job) |
 | Database | MongoDB |
 | Container runtime | Podman |
-| Kubernetes | kind (local cluster) |
+| Kubernetes | Kind (local cluster) |
+| PowerShell | Terminal |
+| Windows | OS where everything runs |
