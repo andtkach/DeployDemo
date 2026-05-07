@@ -1,30 +1,17 @@
 1. Intro.
 
-I’ve been running technical interviews at the company I work for for a little over a year now.
-
-One thing I keep noticing in technical interviews is that deployment becomes a weird blind spot for a lot of developers.
-
-You can talk architecture, APIs, clean code, scaling — no problem.
-But once the conversation gets to *“How do you actually deploy this thing?”* it often gets uncomfortable.
-
-And the answer is usually something like:
-*“Well… we have a DevOps person for that.”*
-
-Which is fair — a lot of teams work like that.
-But I still think every developer should know the basics of how their app gets deployed, how it runs, and what happens after it leaves their laptop.
-
-Just the practical stuff you really should be comfortable with as a programmer.
-
-On our project, developers handle all of that ourselves — not just writing code, but also dealing with infrastructure, deployments, config, and making sure things actually run.
-
-In this demo, I’ll go through the minimum set of deployment knowledge I think every developer should have.
-
-Nothing theoretical, nothing overengineered — just the practical basics that help you ship software without treating production like magic.
-
-To make it real, let’s use a simple distributed app as an example.
+I’ve been doing technical interviews at the company I work for for almost two years now.
+And one thing I keep noticing is that a lot of developers get uncomfortable once the conversation moves to deployments.
+We can talk architecture, APIs, clean code, scaling — no problem.
+But when the question becomes “How do you actually deploy this?” the answer is often:
+“Well… we have a DevOps person for that.”
+And that’s fine — a lot of teams work that way.
+But I still think every developer should understand the basics of how their application gets deployed, runs, and survives outside their laptop.
+On our project, developers handle not only the code, but also infrastructure, deployments, configuration, and making sure everything actually works in production.
+So in this demo, I want to go through the minimum deployment knowledge I think every developer should know.
+And to keep it simple, we’ll use a small distributed application as an example.
 
 We’ll have 4 parts: UI, API, Proc, Database.
-
 Demo image: doc\img\01-app-architecture.png
 
 And we’ll start with the easiest setup possible: let's run the whole thing locally.
@@ -64,7 +51,7 @@ Delete all containers and volumes before moving on.
 3. Create kubernetes cluster
 First of all we need to create a Kubernetes cluster. I will use Kind for this.
 
-My Kubernetes cluster will host all services: api, ui, proc and database.
+My Kubernetes cluster will host everything: api, ui, proc and database.
 Demo image: doc\img\03-kubernetes-cluster.png
 
 We will deploy one database with persistent storage.

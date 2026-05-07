@@ -1,0 +1,11 @@
+1. Intro.
+I’ve been doing technical interviews at the company I work for for almost two years now.
+And one thing I keep noticing is that a lot of developers get uncomfortable once the conversation moves to deployments.
+We can talk architecture, APIs, clean code, scaling — no problem.
+But when the question becomes “How do you actually deploy this?” the answer is often:
+“Well… we have a DevOps person for that.”
+And that’s fine — a lot of teams work that way.
+But I still think every developer should understand the basics of how their application gets deployed, runs, and survives outside their laptop.
+On our project, developers handle not only the code, but also infrastructure, deployments, configuration, and making sure everything actually works in production.
+So in this demo, I want to go through the minimum deployment knowledge I think every developer should know.
+And to keep it simple, we’ll use a small distributed application as an example.

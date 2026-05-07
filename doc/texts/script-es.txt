@@ -1,0 +1,14 @@
+1. Intro.
+Llevo casi dos años haciendo entrevistas técnicas en la empresa donde trabajo.
+Y una cosa que sigo notando es que muchos desarrolladores se sienten incómodos cuando la conversación pasa a los deployments.
+Podemos hablar de arquitectura, APIs, clean code, escalabilidad — sin problema.
+Pero cuando aparece la pregunta:
+“¿Y cómo despliegas realmente esto?”
+la respuesta muchas veces es algo como:
+“Bueno… tenemos una persona de DevOps para eso.”
+Y está bien — muchos equipos trabajan así.
+Pero aun así creo que todo desarrollador debería entender lo básico:
+cómo se despliega su aplicación, cómo funciona y cómo sobrevive fuera de su portátil.
+En nuestro proyecto, los desarrolladores no solo escriben código, sino que también se encargan de la infraestructura, los deployments, la configuración y de asegurarse de que todo funcione realmente en producción.
+Así que en esta demo quiero mostrar el conjunto mínimo de conocimientos sobre deployments que, en mi opinión, debería tener cualquier desarrollador.
+Y para mantenerlo simple, vamos a usar una pequeña aplicación distribuida como ejemplo.
