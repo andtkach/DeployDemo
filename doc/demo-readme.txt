@@ -75,7 +75,7 @@ Demo image: doc\img\05-canary.png
 We have both old and new version working together. The new version is deployed with a canary strategy, so it is not yet visible to all users.
 
 7. Demo blue green deployment
-Demo image: 06-blue-green. CREATE BLUE GREEN
+Demo image: doc\img\06-blue-green.png
 ./infra/04-BlueGreen/readme.txt
 
 We have both old and new version working together. The new version is deployed with a blue-green strategy, so it is not yet visible to all users.
