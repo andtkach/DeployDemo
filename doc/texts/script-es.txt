@@ -1,14 +1,318 @@
-1. Intro.
+00:00
 Llevo casi dos años haciendo entrevistas técnicas en la empresa donde trabajo.
 Y una cosa que sigo notando es que muchos desarrolladores se sienten incómodos cuando la conversación pasa a los deployments.
 Podemos hablar de arquitectura, APIs, clean code, escalabilidad — sin problema.
-Pero cuando aparece la pregunta:
-“¿Y cómo despliegas realmente esto?”
-la respuesta muchas veces es algo como:
-“Bueno… tenemos una persona de DevOps para eso.”
+Pero cuando aparece la pregunta "¿Cómo despliegas esto realmente?" la respuesta muchas veces es:
+"Bueno… tenemos una persona de DevOps para eso."
 Y está bien — muchos equipos trabajan así.
-Pero aun así creo que todo desarrollador debería entender lo básico:
-cómo se despliega su aplicación, cómo funciona y cómo sobrevive fuera de su portátil.
+Pero aun así creo que todo desarrollador debería entender lo básico de cómo se despliega su aplicación, cómo funciona y cómo sobrevive fuera de su portátil.
 En nuestro proyecto, los desarrolladores no solo escriben código, sino que también se encargan de la infraestructura, los deployments, la configuración y de asegurarse de que todo funcione realmente en producción.
-Así que en esta demo quiero mostrar el conjunto mínimo de conocimientos sobre deployments que, en mi opinión, debería tener cualquier desarrollador.
+Así que en esta demo quiero repasar el conocimiento mínimo sobre deployments que, en mi opinión, debería tener cualquier desarrollador.
 Y para mantenerlo simple, vamos a usar una pequeña aplicación distribuida como ejemplo.
+
+00:50
+Aquí está la aplicación de demo que vamos a desplegar. Gestiona una lista de ciudades, almacena datos en una base de datos, tiene una Web API para operaciones CRUD y una UI para ver y gestionar ciudades. La aplicación también tiene tareas en segundo plano de larga duración que procesan datos de ciudades.
+
+01:20
+La configuración del entorno local es la siguiente. Necesitamos Docker y Kubernetes instalados en nuestra máquina. Voy a usar Podman y Kind y ejecutar todo en Windows.
+
+01:42
+Tenemos el código fuente, scripts para construir imágenes localmente y vamos a arrancar cada contenedor localmente.
+
+02:09
+Arrancamos la base de datos en docker
+
+02:22
+Revisamos Podman y vemos el contenedor de base de datos en ejecución.
+
+02:32
+Ahora podemos construir la imagen de la API localmente y arrancar el contenedor de API.
+
+02:50
+Es posible probar la API localmente usando peticiones HTTP.
+
+03:05
+Ahora vamos a probar la Cities API con peticiones GET y POST.
+
+03:30
+Revisamos Podman para ver los contenedores en ejecución.
+
+03:37
+El siguiente paso es construir y arrancar el Processor para actualizar los datos de ciudades.
+
+04:00
+Vemos que el Processor actualizó 3 ciudades con nombres en MAYÚSCULAS.
+
+04:18
+La API y el Processor trabajan juntos para actualizar los datos de ciudades.
+
+04:37
+Por último podemos construir y arrancar la UI para ver y gestionar ciudades.
+
+04:55
+En el navegador web vemos la API y la UI con una buena aplicación de gestión de ciudades y el processor funcionando en segundo plano.
+
+05:43
+Si revisamos los contenedores en ejecución veremos una instancia de base de datos, una API y un contenedor de UI en ejecución.
+
+05:56
+Lo mismo en Podman.
+
+06:07
+Para hacer pruebas de integración podemos, por supuesto, usar Docker Compose para ejecutar varios contenedores juntos.
+
+06:18
+Vamos a ejecutar Docker Compose. El script reconstruirá las imágenes y arrancará todos los contenedores definidos en docker-compose.yml.
+
+06:33
+Una prueba rápida en el navegador web y vemos todo arriba y funcionando con Docker Compose.
+
+06:50
+Tengo la sensación de que muchos desarrolladores se quedan aquí y no van más lejos con los deployments.
+Nada nos impide dar el siguiente paso muy importante para simular un deployment real en producción con Kubernetes. Es muy fácil ejecutar Kubernetes localmente usando por ejemplo Kind y comprobar la aplicación en un entorno de producción real.
+
+07:20
+Empecemos creando un clúster de Kubernetes local usando Kind.
+
+07:30
+Usaremos las imágenes de la aplicación construidas localmente y también descargaremos la imagen de base de datos desde el repositorio público. Luego creamos el namespace y desplegamos todos los servicios en ese namespace. Aquí está el ConfigMap, Service y StatefulSet para la base de datos, un Deployment con 3 instancias de API y Service para la API, también creamos un par de instancias de UI y Service para la UI y finalmente un CronJob para el processor en segundo plano de larga duración.
+
+08:29
+Aquí en Podman y Kind, por ahora no tengo nada configurado y podemos empezar a construir el clúster local.
+
+08:48
+Aquí está el config para el clúster con dos puertos expuestos.
+
+08:59
+El clúster está arriba y funcionando. Revisamos en Podman qué tenemos en ejecución.
+
+09:14
+Aquí está el clúster con un nodo y nada más. Listo para funcionar.
+
+09:32
+Por si acaso podemos reconstruir imágenes frescas y asignar etiquetas con versiones.
+
+09:38
+Reconstruimos las imágenes de API, UI y Processor.
+
+09:54
+El siguiente paso es desplegar el LoadBalancer en el Clúster, voy a usar MetalLB. Es necesario para exponer los servicios fuera del clúster.
+
+10:25
+El último paso de preparación es hacer las imágenes disponibles en el clúster local. Para eso exportaremos las imágenes a un archivo Tar y las cargaremos desde ahí. Necesitamos exportar las imágenes de API, UI y Processor, y luego cargarlas en el Clúster.
+
+11:01
+El Clúster local está listo y podemos empezar a desplegar la aplicación.
+
+11:15
+Aquí está el archivo Yaml con el Deployment y si comparamos Docker Compose con este Yaml, vemos que son muy similares. En Docker Compose tenemos Database, API, UI, Processor.
+
+11:34
+Lo mismo tenemos en Kubernetes. Aquí está la definición del Namespace, ConfigMap, Service para la base de datos y StatefulSet.
+
+11:54
+Aquí está el Deployment para la API y el Service para la API. Como puede verse desplegamos 3 instancias de API.
+
+12:08
+Deployment para la UI, 3 instancias y Service para la UI.
+
+12:14
+Por último tenemos el CronJob para el Processor que se ejecuta cada minuto.
+
+12:33
+Es muy importante señalar que tenemos límites de recursos similares a los que tendremos en Producción. Esto es exactamente lo que necesitamos tener en Kubernetes porque el deployment en producción siempre funciona con límites de recursos.
+
+12:56
+Ahora es momento de desplegar la aplicación en el clúster.
+
+13:05
+Aplicamos los archivos Yaml al clúster usando Kubectl Apply. Luego verificamos que todos los pods están en ejecución y confirmamos que la aplicación está lista.
+
+13:38
+Listo. Estamos en el clúster de Kubernetes. Una instancia de base de datos, 3 APIs, 3 instancias de UI y el Processor ejecutándose cada minuto.
+
+14:02
+Podemos obtener el estado del Clúster, aquí están los Pods, Services, Deployments y ReplicaSet, StatefulSet y CronJob. Estamos listos para probar la API y la UI desde el navegador. La API responde con el nombre de instancia y la versión. La UI está lista para gestionar ciudades en la base de datos.
+
+15:03
+Confirmamos el estado del Clúster en Podman, aquí está el Namespace demo con todos los Deployments, Services y Pods.
+
+15:36
+Podemos intentar probar la API y la UI con tests HTTP como en un entorno de Producción real. La API responde con diferentes nombres de instancia y la misma versión. La UI responde con la versión de UI y otros datos de la aplicación.
+
+16:23
+Aquí estamos, la aplicación completa está arriba y funcionando en el clúster de Kubernetes y lista para atender peticiones. Simulamos el deployment en producción localmente usando Kind y un par de scripts.
+
+16:32
+Cuando la aplicación está arriba y funcionando siempre tenemos ideas de mejora y este es el momento de planificar el lanzamiento de una nueva versión y empezaremos con Rolling Update.
+
+16:47
+Rolling Update es una forma de actualizar la aplicación sin tiempo de inactividad. Actualizaremos un pod a la vez manteniendo el clúster en funcionamiento. Es una forma segura de actualizar la aplicación en producción. La nueva versión se lanzará gradualmente y el clúster seguirá disponible. La versión antigua será reemplazada gradualmente por la nueva.
+
+17:55
+Como prerequisito necesitamos tener la aplicación arriba y funcionando, revisemos los Pods y el Service, todo funciona bien.
+
+18:20
+Podemos simular peticiones HTTP a la Web API y ejecutar una petición por segundo simulando uso real y observando la versión de la API en la respuesta.
+
+18:52
+Revisamos de nuevo el Clúster con los Pods y empezamos a trabajar en la nueva versión de la Web API.
+
+19:08
+Cuando la nueva versión de la API está lista necesitamos incrementar el número de versión y actualizar la imagen Docker con la última API y etiquetarla como versión 2.
+
+19:31
+Preparamos las imágenes para el Clúster.
+
+19:48
+Ahora aplicamos la nueva versión de la Web API al Clúster. Revisamos el estado del Deployment, ahí va, casi terminado.
+
+20:23
+Obtenemos información sobre los Pods y el Service, aquí están los Pods antiguos terminando y los nuevos arrancando.
+
+20:48
+Ja ja, ups, algún error.
+
+20:54
+Y por fin todo está listo, tenemos la nueva versión desplegada.
+
+21:05
+¿Y qué pasa con los consumidores de la Web API? Como vemos inicialmente las respuestas las generaba la versión 1 de la API.
+
+21:12
+Luego la versión 2 empezó a responder junto con la versión antigua y al final solo se usaba la versión 2.
+
+21:29
+El lanzamiento fue invisible para los consumidores. Sin tiempo de inactividad, sin problemas.
+
+21:39
+La UI muestra respuestas de la API versión 2. Esa es la idea principal de la estrategia de deployment Rolling Update.
+
+21:49
+Es momento de ver qué es el deployment Canary.
+
+21:59
+El deployment Canary es una estrategia donde una pequeña porción del tráfico se dirige a una nueva versión de la aplicación antes de desplegarlo en todo el clúster. Podemos mantener las versiones antigua y nueva funcionando al mismo tiempo y monitorear si hay problemas antes de desplegar completamente la nueva versión.
+
+22:29
+En nuestro caso distribuiremos el tráfico entre las versiones antigua y nueva enviando aproximadamente el 25% del tráfico a la nueva versión y el 75% a la antigua.
+
+22:48
+Como prerequisito necesitamos la aplicación funcionando en el Clúster. Revisamos los Pods. Tenemos la API versión 2 arriba y funcionando.
+
+23:00
+Arrancamos el monitor para ver qué versión de la API maneja las peticiones. Vemos que la versión 2 está respondiendo a las peticiones.
+
+23:13
+Es momento de trabajar en la versión 3 de la API, incrementamos la versión a 3 y la hacemos disponible.
+
+23:30
+Construimos el contenedor con la versión 3 de la API y lo preparamos para el Clúster Kind.
+
+23:53
+Es momento de aplicar la versión 3 de la API al Clúster Kind usando la estrategia de deployment Canary.
+
+24:09
+Aquí marcamos la nueva instancia como Canary, así es exactamente como las imágenes serán identificadas después. Arrancaremos el contenedor desde la versión 3 de la API.
+
+24:24
+Aplicamos y revisamos el estado.
+
+24:33
+Aquí está la nueva instancia de la versión 3 lista.
+
+24:40
+Ahora tenemos 4 instancias de la Web API. 3 con la versión 2 y 1 con la versión 3.
+
+24:50
+¿Qué dice el Monitor?
+
+24:55
+Ja ja, aquí está el Demo Daemon
+
+24:57
+De todas formas vemos que la mayoría de las respuestas las manejó la versión 2 de la API. Solo una pequeña parte del tráfico fue dirigida a la versión 3.
+
+25:12
+Podemos mantener ambas versiones funcionando al mismo tiempo y monitorear si hay problemas antes de desplegar completamente la versión 3. Cuando estemos listos, podemos lanzar la versión 3 a producción y eliminar la versión 2 de la API.
+
+25:28
+Otra prueba es comprobar la tasa de respuesta. Aquí hay un test que ejecuta 40 peticiones e identifica qué versión de la API las maneja. Aquí están las respuestas de la versión 2 y la versión 3.
+
+25:58
+Aproximadamente el 15% de las peticiones fueron manejadas por la versión 3 de la API. Ejecutamos el test otra vez para ver la distribución del tráfico.
+
+26:07
+Ahora aproximadamente el 17% de las peticiones fueron manejadas por la versión 3 de la API.
+
+26:18
+En Podman vemos 2 Deployments, uno con 3 instancias de la API versión 2 y otro Deployment con 1 instancia de la API versión 3.
+
+26:34
+La UI sigue igual, pero el tráfico ahora está distribuido entre la versión 2 y la versión 3 de la API.
+
+26:37
+En el navegador web podemos ver respuestas de ambas versiones de la API.
+
+26:42
+Aquí está la respuesta de la API versión 3 y luego algunas respuestas de la API versión 2.
+
+26:58
+Eso fue el deployment Canary.
+
+27:03
+La estrategia de deployment final es el deployment Blue-Green.
+
+27:09
+La idea principal aquí es tener dos entornos idénticos (blue y green) y cambiar el tráfico entre ellos. En nuestro caso tendremos la UI versión 1 y la UI versión 2 funcionando al mismo tiempo con el mismo número de instancias, y al final cambiaremos el tráfico entre la versión 1 y la versión 2.
+
+28:00
+Como prerequisito para el deployment Blue-Green necesitamos tener la aplicación funcionando en el Clúster Kind de las demos anteriores.
+
+28:11
+Revisemos qué tenemos ahí. 3 instancias de la UI versión 1.
+
+28:21
+Los pods de la UI versión 1 necesitan actualizarse con la etiqueta Blue dentro del Clúster. Marcaremos las instancias existentes como Blue y revisamos el estado.
+
+28:40
+Aquí están las 3 instancias de UI marcadas como Blue.
+
+28:52
+Verificamos la UI en el navegador y comprobamos la UI versión 1.
+
+29:11
+Es momento de trabajar en la siguiente versión de la UI, cambiaremos los estilos en la aplicación frontend y por supuesto cambiaremos el color de fondo a verde.
+
+29:20
+Vamos a tocar los estilos de la aplicación frontend y cambiar el fondo de azul a verde e incrementar la versión de la aplicación UI a la versión 2.
+
+29:47
+Construimos la imagen de UI y la preparamos para el Clúster Kind y empezamos el deployment.
+
+30:19
+Desplegaremos 3 instancias de la UI versión 2 en el Clúster Kubernetes, también crearemos el Service para la UI versión 2.
+
+30:37
+Es momento de revisar el estado de las aplicaciones UI en el Clúster. Vemos 3 instancias de la versión 1 y 3 instancias de la versión 2.
+
+30:51
+Confirmamos lo mismo en Podman. Aquí están dos Deployments de la UI con 3 instancias cada uno.
+
+31:04
+Nuestros usuarios en producción ven la UI publicada en el puerto 3032. Aquí está la versión 1 publicada en Prod. Para hacer la UI versión 2 disponible necesitamos establecer un nuevo puerto para ella. La versión 2 se publicará en el puerto 3033 que se usa luego para pruebas, preparación y para estar listo para el cambio.
+
+31:38
+Publicamos el puerto y revisamos qué tenemos.
+
+31:50
+Aquí está, la UI versión 2 disponible. Los usuarios en producción todavía ven la UI versión 1 en el puerto 3032.
+
+32:10
+Cuando llegue el momento de cambiar a la UI versión 2, parchearemos nuestro Service para que use la versión Green de la UI.
+
+32:39
+Verificamos el estado del Clúster y vemos que la UI apunta al slot Green. Aquí está la última UI versión 2 publicada en producción.
+
+33:01
+Eso es todo para el deployment Blue-Green y el conocimiento práctico mínimo sobre estrategias de deployment que creo que todo desarrollador debería saber.

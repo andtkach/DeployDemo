@@ -1,0 +1,24 @@
+DESCRIPTION
+-----------
+Learn the deployment skills every developer should know — without relying on a DevOps person to explain it!
+
+In this demo we walk through three Kubernetes deployment strategies using a real distributed application: a React UI, an Express.js REST API, a Node.js background processor, and MongoDB.
+
+We start by running everything locally with Docker/Podman, then set up a local Kubernetes cluster using Kind, and demonstrate each strategy step by step with live traffic monitoring.
+
+What's covered:
+- Running a distributed app locally (API + UI + MongoDB + background processor)
+- Docker Compose for integration testing
+- Setting up a local Kubernetes cluster with Kind and MetalLB
+- Rolling Update — zero-downtime API upgrade from v1 to v2
+- Canary deployment — routing 25% of traffic to a new API version
+- Blue-Green deployment — instant traffic switch between UI versions with zero downtime
+
+Perfect for developers who want to understand how deployments actually work in production, not just in theory.
+
+Stack: Node.js, React, MongoDB, Docker, Podman, Kubernetes, Kind, MetalLB, kubectl
+
+
+TAGS
+----
+kubernetes, deployment-strategies, rolling-update, canary-deployment, blue-green-deployment, k8s, devops

@@ -1,0 +1,20 @@
+POST
+----
+Just published a practical demo on Kubernetes deployment strategies for developers.
+
+A lot of devs I talk to in interviews are solid on code but get uncomfortable when the conversation shifts to deployments. So I put together a hands-on walkthrough covering the three strategies you actually see in production: Rolling Update, Canary, and Blue-Green.
+
+The demo uses a small distributed app (React UI, Node.js API, MongoDB, background processor) running in a local Kubernetes cluster. Everything from scratch — no shortcuts.
+
+Published in three languages:
+
+English: [YOUTUBE LINK EN]
+Ukrainian: [YOUTUBE LINK UA]
+Spanish: [YOUTUBE LINK ES]
+
+If you are a developer who wants to understand what happens after coding — this one is for you.
+
+
+TAGS
+----
+#Kubernetes #DevOps #SoftwareDevelopment #Docker #Deployment #BackendDevelopment #Programming #Developer #LearningInPublic

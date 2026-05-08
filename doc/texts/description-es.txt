@@ -1,0 +1,24 @@
+DESCRIPCIÓN
+-----------
+¡Aprende las habilidades de deployment que todo desarrollador debería conocer — sin depender de un especialista en DevOps!
+
+En esta demo recorremos tres estrategias de deployment en Kubernetes usando una aplicación distribuida real: una UI en React, una REST API en Express.js, un procesador en segundo plano en Node.js y MongoDB.
+
+Empezamos ejecutando todo localmente con Docker/Podman, luego configuramos un clúster de Kubernetes local usando Kind y demostramos cada estrategia paso a paso con monitoreo de tráfico en tiempo real.
+
+Qué se cubre:
+- Ejecutar una aplicación distribuida localmente (API + UI + MongoDB + procesador en segundo plano)
+- Docker Compose para pruebas de integración
+- Configurar un clúster de Kubernetes local con Kind y MetalLB
+- Rolling Update — actualización de la API de v1 a v2 sin tiempo de inactividad
+- Canary deployment — dirigir el 25% del tráfico a una nueva versión de la API
+- Blue-Green deployment — cambio instantáneo de tráfico entre versiones de la UI sin tiempo de inactividad
+
+Perfecto para desarrolladores que quieren entender cómo funcionan los deployments realmente en producción, no solo en teoría.
+
+Stack: Node.js, React, MongoDB, Docker, Podman, Kubernetes, Kind, MetalLB, kubectl
+
+
+ETIQUETAS
+---------
+kubernetes, deployment-strategies, rolling-update, canary-deployment, blue-green-deployment, k8s, devops
