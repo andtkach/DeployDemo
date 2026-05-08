@@ -1,3 +1,6 @@
+TITLE
+Demo práctica sobre estrategias de despliegue en Kubernetes para desarrolladores
+
 DESCRIPCIÓN
 -----------
 ¡Aprende las habilidades de deployment que todo desarrollador debería conocer — sin depender de un especialista en DevOps!
@@ -18,6 +21,7 @@ Perfecto para desarrolladores que quieren entender cómo funcionan los deploymen
 
 Stack: Node.js, React, MongoDB, Docker, Podman, Kubernetes, Kind, MetalLB, kubectl
 
+GitHub: [ https://github.com/andtkach/DeployDemo ]
 
 ETIQUETAS
 ---------

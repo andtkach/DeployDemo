@@ -1,3 +1,6 @@
+TITLE
+Практичне демо стратегій деплойменту в Kubernetes для розробників
+
 ОПИС
 -----
 Дізнайся про навички деплойменту, які повинен мати кожен розробник — без потреби розраховувати на DevOps-спеціаліста!
@@ -18,6 +21,7 @@
 
 Стек: Node.js, React, MongoDB, Docker, Podman, Kubernetes, Kind, MetalLB, kubectl
 
+GitHub: [ https://github.com/andtkach/DeployDemo ]
 
 ТЕГИ
 ----

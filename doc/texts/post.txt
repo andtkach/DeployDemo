@@ -1,3 +1,6 @@
+TITLE
+Practical demo on Kubernetes deployment strategies for developers
+
 POST
 ----
 Just published a practical demo on Kubernetes deployment strategies for developers.
@@ -11,6 +14,8 @@ Published in three languages:
 English: [YOUTUBE LINK EN]
 Ukrainian: [YOUTUBE LINK UA]
 Spanish: [YOUTUBE LINK ES]
+
+GitHub: [ https://github.com/andtkach/DeployDemo ]
 
 If you are a developer who wants to understand what happens after coding — this one is for you.
 
