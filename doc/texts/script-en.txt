@@ -1,23 +1,23 @@
 00:00
-I’ve been doing technical interviews at the company I work for for almost two years now.
+I've been doing technical interviews at the company I work for for almost two years now.
 And one thing I keep noticing is that a lot of developers get uncomfortable once the conversation moves to deployments.
 We can talk architecture, APIs, clean code, scaling — no problem.
-But when the question becomes “How do you actually deploy this?” the answer is often:
-“Well… we have a DevOps person for that.”
-And that’s fine — a lot of teams work that way.
+But when the question becomes "How do you actually deploy this?" the answer is often:
+"Well… we have a DevOps person for that."
+And that's fine — a lot of teams work that way.
 But I still think every developer should understand the basics of how their application gets deployed, runs, and survives outside their laptop.
 On our project, developers handle not only the code, but also infrastructure, deployments, configuration, and making sure everything actually works in production.
 So in this demo, I want to go through the minimum deployment knowledge I think every developer should know.
-And to keep it simple, we’ll use a small distributed application as an example.
+And to keep it simple, we'll use a small distributed application as an example.
 
 00:50
-Here is demo application we will be deploying. It manages list of Cities, Store data in database, have Web API for CRUD operations and UI to view and manage Cities. App also has long running background tasks that process City data.
+Here is the demo application we will be deploying. It manages a list of Cities, stores data in a database, has a Web API for CRUD operations and UI to view and manage Cities. App also has long running background tasks that process City data.
 
 01:20
-Local env setup is following. We need Docker and Kubernetes installed on our machine. I will use Podman and King and run everything on Windows.
+Local env setup is following. We need Docker and Kubernetes installed on our machine. I will use Podman and Kind and run everything on Windows.
 
 01:42
-We have source code, build scripts to build images locally and we will srart every container locally.
+We have source code, build scripts to build images locally and we will start every container locally.
 
 02:09
 Start database in docker
@@ -53,13 +53,13 @@ Finally we can build and run UI to view and manage Cities.
 In the Web Browser we see API and UI with cool City management application and processor working in background.
 
 05:43
-If we check running contailers we will see one instance on Database, one API and one UI container running.
+If we check running containers we will see one instance of Database, one API and one UI container running.
 
 05:56
 The same in Podman.
 
 06:07
-To do Integration tests we of cource can use Docker Compose to run multiple containers together.
+To do Integration tests we of course can use Docker Compose to run multiple containers together.
 
 06:18
 Let's run Docker Compose. The script will rebuild images and start all containers defined in docker-compose.yml.
@@ -68,17 +68,17 @@ Let's run Docker Compose. The script will rebuild images and start all container
 Quick test in Web Browser and we see all up and running with Docker Compose.
 
 06:50
-I have a fieling that a lot of developers stop here and do not go further with deployments.
+I have a feeling that a lot of developers stop here and do not go further with deployments.
 Nothing stops us from next very important step for simulating real production deployment with Kubernetes. It is very easy to run Kubernetes locally using for example Kind and check application in real production environment.
 
 07:20
 Let's start from creating local Kubernetes cluster using Kind.
 
 07:30
-We will use application images built locally and also pull Database image from public images repository. Then we create namespace and deploy all services to that namespace. Hers is ConfigMap, Service and StatefulSet for Database, Deployment with 3 instances of API and Service for API, also creare couple of instances of UI and Service for UI and finally CronJob for long running background processor.
+We will use application images built locally and also pull Database image from public images repository. Then we create namespace and deploy all services to that namespace. Here is ConfigMap, Service and StatefulSet for Database, Deployment with 3 instances of API and Service for API, also create a couple of instances of UI and Service for UI and finally CronJob for long running background processor.
 
 08:29
-Here in Porman and King, now I have nothing yet configured and we can start build local cluster.
+Here in Podman and Kind, now I have nothing yet configured and we can start building the local cluster.
 
 08:48
 Here is config for cluster with two ports exposed.
@@ -87,7 +87,7 @@ Here is config for cluster with two ports exposed.
 Cluster is up and running. Check in Podman what we have running.
 
 09:14
-Here is cluster with one code and nothing else in it. Ready to go.
+Here is cluster with one node and nothing else in it. Ready to go.
 
 09:32
 Just in case we can rebuild fresh images and assign tags with versions.
@@ -96,16 +96,16 @@ Just in case we can rebuild fresh images and assign tags with versions.
 Rebuild API, UI and Processor images.
 
 09:54
-Next step is to deploy LoadBalances into Cluster, i will use MetalLB. It is needed to expose services outside of the cluster.
+Next step is to deploy LoadBalancer into Cluster, I will use MetalLB. It is needed to expose services outside of the cluster.
 
 10:25
-Final preparation step is to make images available in local cluster. For that we will unload images into Tar archive and load from there. We need unload API, UI and Processor images, and then load in to Cluster.
+Final preparation step is to make images available in local cluster. For that we will export images to a Tar archive and load from there. We need to export the API, UI and Processor images, and then load them into the Cluster.
 
 11:01
 Local Cluster is ready and we can start deploying application there.
 
 11:15
-Here is Yaml file with Deployment and if we compare Docker Compose with this Yaml, we can see that they are wery similar. In Docker Compose we have Database, API, UI, Processor.
+Here is Yaml file with Deployment and if we compare Docker Compose with this Yaml, we can see that they are very similar. In Docker Compose we have Database, API, UI, Processor.
 
 11:34
 The same we have on Kubernetes. Here is Namespace definition, ConfigMap, Service for Database and StatefulSet.
@@ -120,28 +120,28 @@ Deployment for UI, 3 instances there and Service for UI.
 Finally we have CronJob for Processor which runs every minute.
 
 12:33
-Very important thing to note is that we have resource limits similart to what we will have on Production. This is exactly what we need to have in Kubernetes because Production deployment is always running with resource limits in place.
+Very important thing to note is that we have resource limits similar to what we will have on Production. This is exactly what we need to have in Kubernetes because Production deployment is always running with resource limits in place.
 
 12:56
 Now time to deploy the application into the cluster.
 
 13:05
-Apply the Yaml files to the cluster using Kubectl Apply.Then verify that all pods are running and confirm Application is ready.
+Apply the Yaml files to the cluster using Kubectl Apply. Then verify that all pods are running and confirm Application is ready.
 
 13:38
 Ready. We are in the Kubernetes cluster. One instance of Database, 3 APIs, 3 UI instances, and Processor running every minute.
 
 14:02
-We can get state of a Cluster, here are Pods, Services, Deployments and ReplicaSet, StatefulSet and CronJob. We are ready to test API and UI from the browser. API is responding with instance name and version. UI is ready to manage Cities in in the Database.
+We can get state of a Cluster, here are Pods, Services, Deployments and ReplicaSet, StatefulSet and CronJob. We are ready to test API and UI from the browser. API is responding with instance name and version. UI is ready to manage Cities in the Database.
 
 15:03
-Confirm Cluster state in Podman, here is demo Namestance with all Deployments, Services and Pods.
+Confirm Cluster state in Podman, here is demo Namespace with all Deployments, Services and Pods.
 
 15:36
-We can try testing API and UI with HTTP tests like it in real Production environment. API is responding with different instances names and the same version. UI is responding with UI version and some other app data.
+We can try testing API and UI with HTTP tests like it in real Production environment. API is responding with different instance names and the same version. UI is responding with UI version and some other app data.
 
 16:23
-Here we are, complete application is up and running in the Kubernetes cluster and ready to serve requests. We simulated Production deployment locally using King and couple of scripts.
+Here we are, complete application is up and running in the Kubernetes cluster and ready to serve requests. We simulated Production deployment locally using Kind and a couple of scripts.
 
 16:32
 When application is up and running we always have ideas for improvements and here is a time to plan releasing new version and we will start with Rolling Update.
@@ -153,7 +153,7 @@ Rolling Update is a way to update application without downtime. We will update o
 As a prerequisite we need to have application up and running, let's check Pods and Service, all works fine.
 
 18:20
-We can simulate HTTP requests to Web API and execute request each second simulating real usage and ubserve api version provided response for the user.
+We can simulate HTTP requests to Web API and execute request each second simulating real usage and observe the API version in the response.
 
 18:52
 Once again check Cluster with Pods and start working on new version of Web API.
@@ -167,7 +167,7 @@ Prepare images for Cluster.
 19:48
 Now apply new version of Web API to Cluster. Check status of Deployment, here it goes, almost finished.
 
-19:23
+20:23
 Get information about Pods and Service, here are old Pods terminating and new ones starting.
 
 20:48
@@ -180,7 +180,7 @@ And finally everything is ready we have new version rolled out.
 What about consumers of Web API? As we can see initially responses were generated by version 1 of the API.
 
 21:12
-Then v 2 started to response together with old version and in the end only version 2 was used.
+Then v 2 started to respond together with old version and in the end only version 2 was used.
 
 21:29
 Release was invisible for consumers. No downtime, no issues.
@@ -219,10 +219,10 @@ Here we mark new instance with Canary, this is exactly how images will be identi
 Let's Apply and check status.
 
 24:33
-Here in brand new instance of version 3 ready.
+Here is brand new instance of version 3 ready.
 
 24:40
-We have 4 instances of Wen API now. 3 with version 2 and 1 with version 3.
+We have 4 instances of Web API now. 3 with version 2 and 1 with version 3.
 
 24:50
 What about Monitor?
@@ -246,7 +246,7 @@ About 15% of requests were handled by version 3 of the API. Let's run test again
 Now about 17% of requests were handled by version 3 of the API.
 
 26:18
-In the Podman we can see 2 Deployments, one with 3 instances on API version 2 and other Deployment with 1 instance on API version 3.
+In the Podman we can see 2 Deployments, one with 3 instances of API version 2 and another Deployment with 1 instance of API version 3.
 
 26:34
 UI stays the same, but traffic is now distributed between version 2 and version 3 of the API.
@@ -264,7 +264,7 @@ It was Canary deployment.
 Final deployment strategy is Blue-Green deployment.
 
 27:09
-Main idea here is to have two identical environments (blue and green) and switch traffic between them. In our case we will have UI version 1 and UI version 2 running side by side with the same instances amount and in the env we will switch traffic between vewrsion 1 and version 2.
+Main idea here is to have two identical environments (blue and green) and switch traffic between them. In our case we will have UI version 1 and UI version 2 running side by side with the same number of instances, and in the end we will switch traffic between version 1 and version 2.
 
 28:00
 As a prerequisite for Blue-Green deployment, we need to have application up and running in Kind Cluster from the previous demos.
@@ -285,7 +285,7 @@ Verify UI in the Browser and check UI version 1.
 It is time to work on next version of the UI, we will change styles on the frontend app and of course change background color to Green.
 
 29:20
-Let's mess with styles on the frontend app and change background from blue to green and increse version of the UI application to version 2.
+Let's mess with styles on the frontend app and change background from blue to green and increase version of the UI application to version 2.
 
 29:47
 Build UI image and make it ready for Kind Cluster and start deployment.
@@ -294,7 +294,7 @@ Build UI image and make it ready for Kind Cluster and start deployment.
 We will deploy 3 instances of UI version 2 into Kubernetes Cluster, also we will create Service for the UI version 2.
 
 30:37
-It is time to check state on the UI apps in Cluster. We can see 3 instances of version 1 and 3 instances of version 2.
+It is time to check state of the UI apps in Cluster. We can see 3 instances of version 1 and 3 instances of version 2.
 
 30:51
 Confirm the same in Podman. Here are two Deployments of the UI 3 instances each.
@@ -312,7 +312,7 @@ Here we are, here is UI version 2 available. Production users still see UI versi
 When it is time to switch to UI version 2, we will patch our Service to use Green version of the UI.
 
 32:39
-Verify state of te Cluster and see UI is targeted to slot Green. Here is latest UI version 2 published to production.
+Verify state of the Cluster and see UI is targeted to slot Green. Here is latest UI version 2 published to production.
 
 33:01
 That is it for Blue-Green deployment and minimum deployment strategies practical knowledge I think every developer should know.
