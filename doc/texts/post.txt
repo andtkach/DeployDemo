@@ -11,15 +11,12 @@ The demo uses a small distributed app (React UI, Node.js API, MongoDB, backgroun
 
 Published in three languages:
 
-English: [YOUTUBE LINK EN]
-Ukrainian: [YOUTUBE LINK UA]
-Spanish: [YOUTUBE LINK ES]
+English: [ https://youtu.be/A2FA7LMlsDo ]
+Ukrainian: [ https://youtu.be/Kq28gwWA3UA ]
+Spanish: [ https://youtu.be/xHmAj7LvXzQ ]
 
 GitHub: [ https://github.com/andtkach/DeployDemo ]
 
 If you are a developer who wants to understand what happens after coding — this one is for you.
 
-
-TAGS
-----
 #Kubernetes #DevOps #SoftwareDevelopment #Docker #Deployment #BackendDevelopment #Programming #Developer #LearningInPublic

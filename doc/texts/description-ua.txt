@@ -25,4 +25,7 @@ GitHub: [ https://github.com/andtkach/DeployDemo ]
 
 ТЕГИ
 ----
-kubernetes, deployment-strategies, rolling-update, canary-deployment, blue-green-deployment, k8s, devops
+kubernetes, deployment_strategies, rolling_update, canary_deployment, blue_green_deployment, k8s, devops
+
+LINK
+https://youtu.be/Kq28gwWA3UA

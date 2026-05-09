@@ -47,4 +47,7 @@ API: http://localhost:3031 — UI: http://localhost:3032
 
 ## Demo walkthroughs
 Repo: [DeployDemo](https://github.com/andtkach/DeployDemo)
-Video: [YouTube](https://www.youtube.com/@andtkach)
+
+Video EN: [YouTube](https://youtu.be/A2FA7LMlsDo)
+Video UA: [YouTube](https://youtu.be/Kq28gwWA3UA)
+Video ES: [YouTube](https://youtu.be/xHmAj7LvXzQ)
